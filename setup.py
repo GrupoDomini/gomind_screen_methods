@@ -18,7 +18,6 @@ setup(
         "frame_inicial.png"
     ]},
     zip_safe=False,
-    packages=find_packages(),
     install_requires=[
         "customtkinter==5.2.2",
         "darkdetect==0.8.0",

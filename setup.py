@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 setup(
     name="gomind_screen_methods",
@@ -11,6 +11,7 @@ setup(
     license="unlicense",
     packages=["gomind_screen_methods"],
     zip_safe=False,
+    packages=find_packages(),
     install_requires=[
         "customtkinter==5.2.2",
         "darkdetect==0.8.0",

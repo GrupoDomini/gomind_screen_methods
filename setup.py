@@ -3,13 +3,20 @@ from setuptools import setup, find_packages
 setup(
     name="gomind_screen_methods",
     python_requires=">=3.6",
-    version="0.0.2",
+    version="0.0.3",
     description="GoMind screen methods functions",
     url="https://github.com/GrupoDomini/gomind_screen_methods.git",
     author="JeffersonCarvalhoGD",
     author_email="jefferson.carvalho@grupodomini.com",
     license="unlicense",
     packages=["gomind_screen_methods"],
+    package_data={"gomind_screen_methods": [
+        "frame_competencia.png",
+        "frame_end.png",
+        "frame_erro.png",
+        "frame_fim.png",
+        "frame_inicial.png"
+    ]},
     zip_safe=False,
     packages=find_packages(),
     install_requires=[

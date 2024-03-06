@@ -3,7 +3,7 @@ from setuptools import setup
 setup(
     name="gomind_screen_methods",
     python_requires=">=3.6",
-    version="0.0.4",
+    version="1.0.0",
     description="GoMind screen methods functions",
     url="https://github.com/GrupoDomini/gomind_screen_methods.git",
     author="JeffersonCarvalhoGD",

@@ -5,18 +5,24 @@
 #########################################################################
 
 from dataclasses import dataclass
-import os
 from typing import Literal
+import requests
+from io import BytesIO
+import os
 
-CAMINHO = os.path.dirname(__file__)
+
+def get_image(url):
+    from PIL import Image
+
+    response = requests.get(url)
+    img = Image.open(BytesIO(response.content))
+    return img
 
 
 def keyboard_listener():
-    # Bibliotecas necessárias
     import os
     from pynput import keyboard
     import customtkinter as ctk
-    from PIL import Image
 
     with keyboard.Events() as events:
         for event in events:
@@ -41,8 +47,12 @@ def keyboard_listener():
                 tk.geometry(f"{largura}x{altura}+{x}+{y}")
 
                 # Carregue a imagem
-                imagem_fundo = Image.open(os.path.join(CAMINHO, "frame_end.png"))
-                imagem_fundo = ctk.CTkImage(imagem_fundo, size=(largura, altura))
+                imagem_fundo = ctk.CTkImage(
+                    get_image(
+                        "https://lh3.googleusercontent.com/u/0/drive-viewer/AKGpiha5lxKkuOhlPWNmIo744MHuTJ4J_N-bVUAqCovhzul7V-Dlowew97MuWgQ-WvTvZj-RnjzXRfBOR7dx0Mt3Vfk0C-9SAA=w1366-h633"
+                    ),
+                    size=(largura, altura),
+                )
 
                 fundo = ctk.CTkLabel(
                     tk, text="", image=imagem_fundo, bg_color="darkgray"
@@ -100,11 +110,9 @@ def keyboard_listener():
 
 def msg_screen(status: Literal["start", "final"] = "start"):
     # Bibliotecas necessárias
-    from PIL import Image
     import webbrowser
     import keyboard as tecla
     import customtkinter as ctk
-    import os
 
     # Variáveis
     url = "http://www.gomind.com"
@@ -126,16 +134,25 @@ def msg_screen(status: Literal["start", "final"] = "start"):
     tk.geometry(f"{largura}x{altura}+{x}+{y}")
 
     if status == "start":
-        imagem_fundo = Image.open(os.path.join(CAMINHO, "frame_inicial.png"))
+        imagem_fundo = ctk.CTkImage(
+            get_image(
+                "https://lh3.googleusercontent.com/u/0/drive-viewer/AKGpihZg7yaP9HqHCtmp54q32Q7-dfWqWnIhVPEmIhHcgOOW0VeE_G29avXEAa-H0198GcOOCuZrpSuaeXXXg3stB6QgxLru=w1366-h633"
+            ),
+            size=(largura, altura),
+        )
     elif status == "final":
-        imagem_fundo = Image.open(os.path.join(CAMINHO, "frame_fim.png"))
+        imagem_fundo = ctk.CTkImage(
+            get_image(
+                "https://lh3.googleusercontent.com/u/0/drive-viewer/AKGpihZmf118A_jFT8sZQcT8SDxYX49-PwQ1naqRcCjEA9vX20l6nyGrz5lrYvMy9fZsMjazoVD4vKVUX0ywaX1XIv3tZsE8Sg=w1366-h633"
+            ),
+            size=(largura, altura),
+        )
     else:
         try:
             tecla.press_and_release("END")
         except Exception as _:
             os._exit(0)
 
-    imagem_fundo = ctk.CTkImage(imagem_fundo, size=(largura, altura))
     fundo = ctk.CTkLabel(tk, text="", image=imagem_fundo, bg_color="darkgray")
     fundo.pack()
 
@@ -207,8 +224,6 @@ def janela_competencia():
     import customtkinter as ctk
     from time import localtime
     import calendar
-    import os
-    from PIL import Image
 
     data_atual = localtime()
     i_mes_ant = data_atual.tm_mon - 1
@@ -261,8 +276,12 @@ def janela_competencia():
         tk.geometry(f"{largura}x{altura}+{x}+{y}")
 
         # Carregue a imagem
-        imagem_fundo = Image.open(os.path.join(CAMINHO, "frame_competencia.png"))
-        imagem_fundo = ctk.CTkImage(imagem_fundo, size=(largura, altura))
+        imagem_fundo = ctk.CTkImage(
+            get_image(
+                "https://lh3.googleusercontent.com/u/0/drive-viewer/AKGpihZ3MWLY0UyKW1E6CPSgxuAW8958LUSqxNy_a95B-64Q_o8R1acu1VpRIQ0yGkDyLU5zGZeqMbPlHazscJr_AA6rDz-H=w1366-h633"
+            ),
+            size=(largura, altura),
+        )
 
         fundo = ctk.CTkLabel(tk, text="", image=imagem_fundo, bg_color="darkgray")
         fundo.pack()
@@ -367,8 +386,6 @@ def janela_competencia():
         if confirmado is True:
             print("Processo confirmado pelo usuário")
             break
-        else:
-            continue
 
     ano = ano_cmpt
     meses_para_numeros = {
@@ -383,8 +400,6 @@ def janela_competencia():
 def erro_msg():
     # Bibliotecas necessárias
     import customtkinter as ctk  # utiliza o customTKINTER para costumizar a tela
-    from PIL import Image
-    import os
 
     # Botao Ok
     def confirmar():
@@ -401,9 +416,12 @@ def erro_msg():
     y = (altura_monitor // 2) - (altura // 2)
     tk.geometry(f"{largura}x{altura}+{x}+{y}")
 
-    # Carregue a imagem
-    imagem_fundo = Image.open(os.path.join(CAMINHO, "frame_erro.png"))
-    imagem_fundo = ctk.CTkImage(imagem_fundo, size=(largura, altura))
+    imagem_fundo = ctk.CTkImage(
+        get_image(
+            "https://lh3.googleusercontent.com/u/0/drive-viewer/AKGpihaO0AiGWB06XsIS7AMEiNlZLtAVFIb2DgazYg6n2vnxAsjY6DSi9k28HYYJ2fnoywdF1rAqePGXY6qwP2WpDavn7Q52sQ=w1366-h633"
+        ),
+        size=(largura, altura),
+    )
 
     fundo = ctk.CTkLabel(tk, text="", image=imagem_fundo, bg_color="darkgray")
     fundo.pack()

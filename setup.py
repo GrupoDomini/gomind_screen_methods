@@ -19,5 +19,6 @@ setup(
         "pillow==10.2.0",
         "pynput==1.7.6",
         "six==1.16.0",
+        "requests==2.31.0",
     ],
 )

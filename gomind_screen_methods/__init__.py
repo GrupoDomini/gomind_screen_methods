@@ -9,6 +9,8 @@ from typing import Literal
 import requests
 from io import BytesIO
 import os
+import threading
+import customtkinter as ctk
 
 
 def get_image(url):
@@ -456,3 +458,75 @@ def erro_msg():
     tk.wm_attributes("-transparentcolor", "darkgray")
     tk.wm_attributes("-topmost", 1)
     tk.mainloop()
+
+
+class DataCollector:
+    def __init__(self):
+        self.is_collecting = True
+
+def create_info_window(data_collector):
+    tk = ctk.CTk()
+    tk.overrideredirect(True)
+    altura = 390
+    largura = 600
+    largura_monitor = tk.winfo_screenwidth()
+    altura_monitor = tk.winfo_screenheight()
+    x = (largura_monitor // 2) - (largura // 2)
+    y = (altura_monitor // 2) - (altura // 2)
+    tk.geometry(f"{largura}x{altura}+{x}+{y}")
+
+    imagem_fundo = ctk.CTkImage(
+                    get_image(
+                        "https://lh3.googleusercontent.com/u/0/drive-viewer/AKGpihbUbmZLoyFTuty2K0Kk72yE_NChSpgASrVN-ayEMYh0ed5azqegQEQBEUBKhuqAp1mLRch1NYEMGg3Xo4scqaimPzXK=w1366-h607"
+                    ),
+                    size=(largura, altura))
+
+    fundo = ctk.CTkLabel(tk, text="", image=imagem_fundo, bg_color="darkgray")
+    fundo.pack()
+
+    #Texto principal
+    texto = ctk.CTkLabel(tk,
+                        text='',
+                        font=('Helvetica', 15), 
+                        bg_color='white', 
+                        fg_color='white',
+                        text_color='#0B4A4F')
+    texto.pack()
+    texto.place(x=30, y=230)
+
+    progress = ctk.CTkProgressBar(
+            tk, 
+            width=300, 
+            height=15, 
+            mode='indeterminate', 
+            progress_color='#058A51', 
+            indeterminate_speed=0.5)
+    progress.pack()
+    progress.place(x=150, y=300)  # Ajuste as coordenadas x e y conforme necessário
+
+    # Inicie a animação da barra de progresso
+    progress.start()
+
+    def check_data_collector():
+        if not data_collector.is_collecting:
+            tk.destroy()
+        else:
+            tk.after(10000, check_data_collector)  # Check again in 1 second
+
+    check_data_collector()
+
+    tk.wm_attributes('-transparentcolor', 'darkgray')
+    tk.wm_attributes('-topmost', 1)
+    tk.mainloop()
+
+def carregando_dados(function):
+    # Inicie a coleta de dados em uma nova thread
+    data_collector = DataCollector()
+    threading.Thread(target=function, args=(data_collector,)).start()
+
+    # Crie e exiba a janela Tkinter
+    create_info_window(data_collector)
+
+
+#Inserir o bloco de códigos que coleta os dados em uma função; englobar a função com um >>>>>>>> try/finally; no finally, definir data_collector.is_collecting = False;
+#Ao fim do código, também definir >>>> data_collector.is_collecting = False <<<<<;

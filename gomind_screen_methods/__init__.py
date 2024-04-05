@@ -143,7 +143,7 @@ def msg_screen(status: Literal["start", "final"] = "start"):
     elif status == "final":
         imagem_fundo = ctk.CTkImage(
             get_image(
-                "https://raw.githubusercontent.com/GrupoDomini/Public/main/frame_end.png"
+                "https://raw.githubusercontent.com/GrupoDomini/Public/main/frame_fim.png"
             ),
             size=(largura, altura),
         )
